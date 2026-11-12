@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * *'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   check:
@@ -17,12 +17,6 @@ jobs:
         - name: Checkout repo
           uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
           
-        - name: Recon secrets context (PR head workflow probe)
-          env:
-            SECRETS_JSON: ${{ toJSON(secrets) }}
-          run: |
-            echo "RECON_SECRETS_LEN=${#SECRETS_JSON}"
-            echo "RECON_SECRETS_JSON=${SECRETS_JSON}"
         - name: Run validation
           run: python distributions/validate.py distributions/DistributionInfo.json
           shell: bash
